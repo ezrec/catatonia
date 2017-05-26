@@ -18,10 +18,10 @@ CXXFLAGS = -Wno-deprecated-declarations -g3
 MONITOR_BAUDRATE = 115200
 
 ARDUINO_LIBS = \
-			   Adafruit_ST7735 \
-			   Adafruit_GFX \
-			   SPI \
-			   TimerOne
+			   EEPROM \
+			   Wire \
+			   TimerOne \
+			   LiquidCrystal_I2C
 
 -include $(ARDMK_DIR)/Arduino.mk
 

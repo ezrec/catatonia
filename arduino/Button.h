@@ -16,5 +16,35 @@
 
 #pragma once
 
+class Button
+{
+    int _pin;
+    bool _state;
+    unsigned long _state_ms;
+
+public:
+    Button(int pin) : _pin(pin) {}
+
+    void update(void)
+    {
+        bool now = digitalRead(_pin);
+
+        if (now != _state)
+        {
+            _state_ms = millis();
+            _state = now;
+        }
+    }
+
+    bool state(void)
+    {
+        return _state;
+    }
+
+    unsigned long elapsed(void)
+    {
+        return (unsigned long)((long)millis() - (long)_state_ms);
+    }
+};
 
 /* vim: set shiftwidth=4 expandtab:  */

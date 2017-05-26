@@ -101,6 +101,7 @@ public:
 		}
 
 		_stepper->step(_phase);
+		_phase = !_phase;
 
 		if (_phase == false)
 		{
@@ -176,4 +177,4 @@ public:
 
 typedef StepQueueClass<8> StepQueue;
 
-/* vim: set shiftwidth=8 noexpandtab:  */
+/* vim: set shiftwidth=4 expandtab:  */
