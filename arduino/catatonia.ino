@@ -9,10 +9,10 @@
 #include "Feeder.h"
 #include "UserInterfaceLCD.h"
 
-#define PIN_STEP    6
-#define PIN_DIR     5
-#define PIN_ENABLE  A0
 #define PIN_BUTTON  3
+#define PIN_ENABLE  4
+#define PIN_STEP    5
+#define PIN_DIR     6
 
 #define STEP_DELAY_MS 10
 
