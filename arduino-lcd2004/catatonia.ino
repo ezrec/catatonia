@@ -22,7 +22,8 @@ StepQueue queue = StepQueue(&motor, STEP_DELAY_MS);
 
 Button button(PIN_BUTTON);
 
-Feeder feeder = Feeder(&queue,-15,50 + 15);
+const unsigned gearbox = 4;
+Feeder feeder = Feeder(&queue,-15 * gearbox,(50 + 15) * gearbox);
 
 UserInterfaceLCD ui = UserInterfaceLCD(&feeder, &button, 30000 /* menu timeout in ms */);
 

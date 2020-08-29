@@ -144,11 +144,6 @@ public:
 		}
 		interrupts();
 
-		if (rc)
-		{
-			Serial.print("Added ");Serial.print(steps);Serial.println(" steps");
-		}
-
 		return rc;
 	}
 

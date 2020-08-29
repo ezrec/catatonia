@@ -141,21 +141,20 @@ public:
 
     void dispense(void)
     {
+        _dispense_time_ms = millis();
+
         _queue->append(_steps_reverse);
-        _queue->append(_steps_forward);
+        for (unsigned i = 0; i < _dispense_count; i++)
+        {
+            _queue->append(_steps_forward);
+        }
     }
 
 	void update(void)
 	{
-		unsigned long now = millis();
-
 		if (elapsed() > _interval_ms)
 		{
-			_dispense_time_ms = now;
-			for (unsigned i = 0; i < _dispense_count; i++)
-			{
-			    dispense();
-			}
+            dispense();
 		}
 	}
 };
