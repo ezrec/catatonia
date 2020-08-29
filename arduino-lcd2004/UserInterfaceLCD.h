@@ -52,6 +52,8 @@ class UserInterfaceLCD
     unsigned _count_update;
     unsigned long _interval_update;
 
+    const unsigned long day_ms = 24UL * 60 * 60 * 1000;
+
 private:
     ui_menu_t menu_dark_(bool first = false)
     {
@@ -75,6 +77,14 @@ private:
         }
 
         return UI_MENU_DARK;
+    }
+
+    void print_intervals_(unsigned long ms)
+    {
+        unsigned long intervals = day_ms / ms;
+
+        _lcd.print(intervals);
+        _lcd.print("/day");
     }
 
     void print_time_(unsigned long ms)
@@ -227,7 +237,7 @@ private:
 
             _lcd.setCursor(0, 1);
             _lcd.print("Interval: ");
-            print_time_(_interval_update);
+            print_intervals_(_interval_update);
 
             _lcd.setCursor(0, 2);
             _lcd.print("Portions: ");
@@ -300,20 +310,6 @@ private:
 
     ui_menu_t menu_settings_interval_(bool first)
     {
-        const unsigned long button_map[] = {
-            15UL * 60000,       // 15 minutes
-            30UL * 60000,       // 30 minutes
-            1UL * 60 * 60000,   // 1 hour
-            2UL * 60 * 60000,   // 2 hours
-            3UL * 60 * 60000,   // 3 hours
-            4UL * 60 * 60000,   // 4 hours
-            6UL * 60 * 60000,   // 6 hours
-            8UL * 60 * 60000,   // 8 hours
-            12UL * 60 * 60000,  // 12 hours
-            18UL * 60 * 60000,  // 18 hours
-            24UL * 60 * 60000,  // 24 hours
-        };
-
         if (_button->state())
         {
             if (!_button_active)
@@ -321,17 +317,17 @@ private:
                 _button_active = true;
             }
 
-            _button_pick = (_button->elapsed() / BUTTON_TIME) % (sizeof(button_map)/sizeof(button_map[0]));
+            _button_pick = (1 + (_button->elapsed() / BUTTON_TIME) % 24);
 
             _lcd.setCursor(10, 1);
             _lcd.print("          ");
             _lcd.setCursor(10, 1);
-            print_time_(button_map[_button_pick]);
+            print_intervals_(day_ms / _button_pick);
         }
         else if (_button_active)
         {
             _button_active = false;
-            _interval_update =  button_map[_button_pick];
+            _interval_update = day_ms / _button_pick;
 
             _lcd.setCursor(0, 1);
             _lcd.print("Interval: ");
